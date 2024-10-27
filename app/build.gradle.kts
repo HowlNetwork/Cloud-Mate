@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("com.google.dagger.hilt.android") // Plugin Hilt
+    id("org.jetbrains.kotlin.kapt")
 }
 
 android {
@@ -59,6 +61,17 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+
+    // Thêm thư viện Material Design 2
+    implementation("androidx.compose.material:material:1.7.5")
+
+    // Hilt Dagger
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
+
+    // Navigation
+    implementation(libs.androidx.navigation.compose.v273)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
