@@ -76,6 +76,9 @@ dependencies {
     // Navigation
     implementation(libs.androidx.navigation.compose.v273)
 
+    // Env
+    implementation(libs.dotenv.kotlin)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

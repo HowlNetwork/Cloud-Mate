@@ -1,0 +1,2 @@
+WEATHER_API_ENDPOINT="http://api.weatherapi.com/v1"
+WEATHER_API_KEY="7c6321cb68aa4ded8e682729241011"
