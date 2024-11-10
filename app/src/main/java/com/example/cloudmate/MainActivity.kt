@@ -29,9 +29,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.compose.rememberNavController
 import com.example.cloudmate.navigation.WeatherNavigation
 import com.example.cloudmate.ui.theme.CloudMateTheme
 import com.example.cloudmate.ui.theme.poppinsFamily
+import com.example.cloudmate.widgets.NavBar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -57,13 +59,23 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun WeatherApp(context: Context) {
     CloudMateTheme {
-        // A surface container using the 'background' color from the theme
-        Surface(
+        val navController = rememberNavController()
+        Scaffold(
             modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colorScheme.primary
-        ) {
-            WeatherNavigation(context)
+            bottomBar = { NavBar(navController) },
+            containerColor = MaterialTheme.colorScheme.primary,
+        ) { innerPadding ->
+            Surface(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding),
+                color = MaterialTheme.colorScheme.primary
+            ) {
+                WeatherNavigation(navController, context)
+
+            }
         }
+        // A surface container using the 'background' color from the theme
     }
 }
 
@@ -120,7 +132,6 @@ fun NoConnection(context: Context) {
                         fontWeight = FontWeight.Medium,
                         color = Color.White
                     )
-
                 }
 
             }

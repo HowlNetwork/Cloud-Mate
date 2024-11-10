@@ -62,11 +62,15 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
 
+    // Thêm thư viện Material Icons
+    implementation("androidx.compose.material:material-icons-extended:1.7.5")
+
     // Thêm thư viện Material Design 2
     implementation("androidx.compose.material:material:1.7.5")
 
     // Hilt Dagger
     implementation(libs.hilt.android)
+    implementation(libs.vision.internal.vkp)
     kapt(libs.hilt.compiler)
 
     // Navigation
