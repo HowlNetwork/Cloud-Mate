@@ -70,9 +70,8 @@ dependencies {
 
     // Hilt Dagger
     implementation(libs.hilt.android)
-    annotationProcessor(libs.hilt.compiler)
-
     implementation(libs.vision.internal.vkp)
+    kapt(libs.hilt.compiler)
 
     // Navigation
     implementation(libs.androidx.navigation.compose.v273)
@@ -111,9 +110,6 @@ dependencies {
 
     // provides Android runtime permissions support for Jetpack Compose
     implementation(libs.accompanist.permissions)
-
-    // To use the Palette class from the AndroidX Palette library
-    implementation(libs.androidx.palette.ktx)
 
     testImplementation(libs.junit)
 
