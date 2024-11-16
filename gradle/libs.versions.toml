@@ -27,6 +27,7 @@ navigationCompose = "2.8.4"
 navigationComposeVersion = "2.8.4"
 okhttp = "5.0.0-alpha.2"
 paletteKtx = "1.0.0"
+hiltAndroidGradlePlugin = "2.44"
 playServicesLocation = "21.3.0"
 roomRuntime = "2.6.1"
 visionInternalVkp = "18.2.3"
@@ -44,6 +45,7 @@ androidx-palette-ktx = { module = "androidx.palette:palette-ktx", version.ref = 
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomRuntime" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomRuntime" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
+hilt-android-gradle-plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hiltAndroidGradlePlugin" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
 dotenv-kotlin = { module = "io.github.cdimascio:dotenv-kotlin", version.ref = "dotenvKotlin" }
