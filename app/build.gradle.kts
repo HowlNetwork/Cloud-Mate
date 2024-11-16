@@ -115,10 +115,20 @@ dependencies {
     implementation(libs.androidx.palette.ktx)
 
     testImplementation(libs.junit)
+
+    // Thư viện Mockito để tạo đối tượng giả
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.kotlin.mockito.kotlin)
+    testImplementation(libs.mockito.inline)
+    testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.androidx.core.testing)
+
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
+
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 }

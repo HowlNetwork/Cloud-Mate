@@ -9,5 +9,14 @@ interface WeatherApi {
     suspend fun getCurrentWeather(
         @Query("q") q: String,
         @Query("aqi") aqi: String
-    ): Response<List<Weather>>
+    ): Response<Weather>
+
+
+    @GET(value = "/forecast.json")
+    suspend fun getForecastWeather(
+        @Query("q") q: String,
+        @Query("days") days: Int,
+        @Query("aqi") aqi: String,
+        @Query("alerts") alerts: String
+    ): Response<Weather>
 }
