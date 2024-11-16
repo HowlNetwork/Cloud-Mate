@@ -28,7 +28,11 @@ fun WeatherNavigation(
             type = NavType.StringType
         })) { navBack ->
             navBack.arguments?.getString("city").let { city ->
-                HomeScreen(navController)
+                HomeScreen(
+                    navController =  navController,
+                    context = context,
+                    city = city
+                )
             }
         }
         composable(BottomNavItem.Forecast.route) {
