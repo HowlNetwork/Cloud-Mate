@@ -66,7 +66,7 @@ dependencies {
     implementation("androidx.compose.material:material-icons-extended:1.7.5")
 
     // Thêm thư viện Material Design 2
-    implementation("androidx.compose.material:material:1.7.5")
+    implementation(libs.androidx.material)
 
     // Hilt Dagger
     implementation(libs.hilt.android)
@@ -79,11 +79,60 @@ dependencies {
     // Env
     implementation(libs.dotenv.kotlin)
 
+    //Coroutines
+    implementation (libs.kotlinx.coroutines.core)
+    implementation (libs.kotlinx.coroutines.android)
+    implementation (libs.kotlinx.coroutines.play.services)
+
+    // To use Kotlin coroutines with lifecycle-aware components
+    implementation (libs.androidx.lifecycle.viewmodel.ktx)
+    implementation (libs.androidx.lifecycle.runtime.ktx.v251)
+
+    //Retrofit
+    implementation (libs.retrofit)
+
+    //GSON converter
+    implementation (libs.converter.gson)
+
+    // Coil
+    implementation(libs.coil.compose)
+
+    // OkHttp
+    //noinspection UseTomlInstead
+    implementation("com.squareup.okhttp3:okhttp:5.0.0-alpha.2")
+
+    //Room
+    implementation(libs.androidx.room.runtime)
+    annotationProcessor(libs.androidx.room.compiler)
+
+    // To use Kotlin annotation processing tool (kapt)
+    kapt(libs.androidx.room.room.compiler)
+    implementation(libs.androidx.room.ktx)
+
+    // Google play's location library
+    implementation (libs.play.services.location)
+
+    // provides Android runtime permissions support for Jetpack Compose
+    implementation(libs.accompanist.permissions)
+
+    // To use the Palette class from the AndroidX Palette library
+    implementation(libs.androidx.palette.ktx)
+
     testImplementation(libs.junit)
+
+    // Thư viện Mockito để tạo đối tượng giả
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.kotlin.mockito.kotlin)
+    testImplementation(libs.mockito.inline)
+    testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.androidx.core.testing)
+
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
+
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 }
