@@ -70,8 +70,9 @@ dependencies {
 
     // Hilt Dagger
     implementation(libs.hilt.android)
+    annotationProcessor(libs.hilt.compiler)
+
     implementation(libs.vision.internal.vkp)
-    kapt(libs.hilt.compiler)
 
     // Navigation
     implementation(libs.androidx.navigation.compose.v273)
@@ -98,16 +99,12 @@ dependencies {
     implementation(libs.coil.compose)
 
     // OkHttp
-    //noinspection UseTomlInstead
-    implementation("com.squareup.okhttp3:okhttp:5.0.0-alpha.2")
+    implementation(libs.okhttp)
 
     //Room
     implementation(libs.androidx.room.runtime)
-    annotationProcessor(libs.androidx.room.compiler)
-
-    // To use Kotlin annotation processing tool (kapt)
-    kapt(libs.androidx.room.room.compiler)
     implementation(libs.androidx.room.ktx)
+    annotationProcessor(libs.androidx.room.compiler)
 
     // Google play's location library
     implementation (libs.play.services.location)
