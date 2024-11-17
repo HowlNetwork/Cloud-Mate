@@ -32,11 +32,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
     }
     buildFeatures {
         compose = true
@@ -75,6 +75,7 @@ dependencies {
 
     // Navigation
     implementation(libs.androidx.navigation.compose.v273)
+    implementation ("androidx.hilt:hilt-navigation-compose:1.2.0")
 
     // Env
     implementation(libs.dotenv.kotlin)
@@ -104,6 +105,7 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     annotationProcessor(libs.androidx.room.compiler)
+    kapt(libs.androidx.room.compiler)
 
     // Google play's location library
     implementation (libs.play.services.location)

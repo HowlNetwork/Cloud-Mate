@@ -26,14 +26,22 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.cloudmate.R
+import com.example.cloudmate.location.GetCurrentLocation
+import com.example.cloudmate.location.getLocationName
+import com.example.cloudmate.screens.forecast.ForecastViewModel
+import com.example.cloudmate.ui.theme.White
 import com.example.cloudmate.ui.theme.poppinsFamily
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.Locale
 
+@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun HomeScreenElements(
+    homeViewModel: HomeViewModel,
+    forecastViewModel: ForecastViewModel,
     context: Context,
     latitude: MutableState<Double>,
     longitude: MutableState<Double>,
@@ -69,7 +77,8 @@ fun HomeScreenElements(
         Text(
             locationName,
             fontSize = 16.sp,
-            fontFamily = poppinsFamily
+            fontFamily = poppinsFamily,
+            color = White
         )
     }
     Row(
@@ -81,38 +90,41 @@ fun HomeScreenElements(
             stringResource(R.string.today_report),
             fontSize = 30.sp,
             fontWeight = FontWeight.Bold,
-            fontFamily = poppinsFamily
+            fontFamily = poppinsFamily,
+            color = White
         )
     }
-//    GetCurrentLocation(
-//        mainViewModel = mainViewModel,
-//        forecastViewModel = forecastViewModel,
-//        context = context,
-//        latitude = latitude,
-//        longitude = longitude
-//    )
+    GetCurrentLocation(
+        homeViewModel = homeViewModel,
+        forecastViewModel = forecastViewModel,
+        context = context,
+        latitude = latitude,
+        longitude = longitude
+    )
 }
 
-suspend fun getLocationName(
-    context: Context,
-    latitude: MutableState<Double>,
-    longitude: MutableState<Double>
-): String {
-    // To specify that the geocoding operation should be performed on the IO dispatcher
-    return withContext(Dispatchers.IO) {
-        /*
-        withContext function will automatically suspend the current coroutine and resume it
-        when the operation is complete, allowing other operations to be performed in the meantime
-         */
-        val geocoder = Geocoder(context, Locale.getDefault())
-        val addresses = geocoder.getFromLocation(latitude.value, longitude.value, 1)
-        var locationName: String = ""
-        if (addresses != null && addresses.size > 0) {
-            locationName = addresses[0].locality
-        }
-        locationName
-    }
-}
+
+
+//suspend fun getLocationName(
+//    context: Context,
+//    latitude: MutableState<Double>,
+//    longitude: MutableState<Double>
+//): String {
+//    // To specify that the geocoding operation should be performed on the IO dispatcher
+//    return withContext(Dispatchers.IO) {
+//        /*
+//        withContext function will automatically suspend the current coroutine and resume it
+//        when the operation is complete, allowing other operations to be performed in the meantime
+//         */
+//        val geocoder = Geocoder(context, Locale.getDefault())
+//        val addresses = geocoder.getFromLocation(latitude.value, longitude.value, 1)
+//        var locationName: String = ""
+//        if (addresses != null && addresses.size > 0) {
+//            locationName = addresses[0].locality
+//        }
+//        locationName
+//    }
+//}
 
 fun getLatLon(context: Context, cityName: String): Address? {
     val geocoder = Geocoder(context)

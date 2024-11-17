@@ -1,6 +1,10 @@
 package com.example.cloudmate.network.weatherapi
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.example.cloudmate.network.common.AppResponse
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 import javax.inject.Inject
 
 class WeatherApiRepository @Inject constructor(private val api: WeatherApi) {

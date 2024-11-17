@@ -3,6 +3,7 @@ package com.example.cloudmate.navigation
 import SearchScreen
 import android.content.Context
 import androidx.compose.runtime.Composable
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -10,7 +11,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.cloudmate.screens.forecast.ForecastScreen
+import com.example.cloudmate.screens.forecast.ForecastViewModel
 import com.example.cloudmate.screens.home.HomeScreen
+import com.example.cloudmate.screens.home.HomeViewModel
 import com.example.cloudmate.screens.setting.SettingScreen
 import com.example.cloudmate.widgets.BottomNavItem
 
@@ -18,7 +21,8 @@ import com.example.cloudmate.widgets.BottomNavItem
 fun WeatherNavigation(
     navController: NavHostController, context: Context
 ) {
-
+    val homeViewModel = hiltViewModel<HomeViewModel>()
+    val forecastViewModel = hiltViewModel<ForecastViewModel>()
     NavHost(navController = navController, startDestination = Screen.Splash.route) {
         composable(Screen.Splash.route) {
 
@@ -31,7 +35,9 @@ fun WeatherNavigation(
                 HomeScreen(
                     navController =  navController,
                     context = context,
-                    city = city
+                    city = city,
+                    homeViewModel = homeViewModel,
+                    forecastViewModel = forecastViewModel
                 )
             }
         }
