@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
 import com.example.cloudmate.screens.forecast.ForecastViewModel
+import com.example.cloudmate.widgets.NavBar
 import kotlinx.coroutines.runBlocking
 
 @Composable
@@ -81,6 +82,9 @@ fun HomeScreen(
                         forecastViewModel = forecastViewModel
                     )
                 }
+            },
+            bottomBar = {
+                NavBar(navController = navController)
             },
             containerColor = Color.Transparent
         )

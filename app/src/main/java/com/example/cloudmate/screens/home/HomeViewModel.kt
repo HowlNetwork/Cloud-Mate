@@ -17,5 +17,10 @@ class HomeViewModel @Inject constructor(private val repository: WeatherApiReposi
     ) : AppResponse<Weather, Boolean, Exception> {
         return repository.getCurrentWeather(lat,lon)
     }
+    suspend fun getForecastWeather (
+        lat: Float,lon : Float
+    ) : AppResponse<Weather, Boolean, Exception> {
+        return repository.getForecastWeather(lat,lon)
+    }
 }
 

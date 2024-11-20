@@ -234,7 +234,7 @@ fun ShowData(
             Log.d("Lat $ Lon", "$latitude and $longitude")
             value = homeViewModel.getCurrentWeather(latitude.toFloat(), longitude.toFloat())
         }.value
-
+        weatherData.data?.current?.condition?.text?.let { Log.d("Weather", it) }
         when {
             weatherData.success == true && weatherData.data != null -> {
                 forecastViewModel.insertCurrentWeatherObject(
@@ -446,23 +446,7 @@ fun ShowData(
                 }
 
             }
-
-            weatherData.success == false || weatherData.data == null -> {
-                // Xử lý trường hợp không có dữ liệu hoặc lỗi
-                Column(
-                    modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    androidx.compose.material3.Text(
-                        "Unable to fetch weather information",
-                        color = Color.White,
-                        fontFamily = poppinsFamily
-                    )
-                }
-            }
             else -> {
-                // Mặc định hiển thị vòng tròn loading
                 Column(
                     modifier = Modifier.fillMaxSize(),
                     verticalArrangement = Arrangement.Center,

@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cloudmate.data.WeatherDbRepository
 import com.example.cloudmate.module.CurrentWeatherObject
+import com.example.cloudmate.network.common.AppResponse
+import com.example.cloudmate.network.weatherapi.Weather
 import com.example.cloudmate.network.weatherapi.WeatherApiRepository
 
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,7 +20,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ForecastViewModel @Inject constructor(private val repository: WeatherDbRepository ) :
+class ForecastViewModel @Inject constructor(private val repository: WeatherDbRepository) :
     ViewModel() {
     private val _weatherObjectList = MutableStateFlow<List<CurrentWeatherObject>>(emptyList())
     val weatherObjectList = _weatherObjectList.asStateFlow()
