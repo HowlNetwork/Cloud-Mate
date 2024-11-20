@@ -48,9 +48,9 @@ fun CloudMateNavigation(
                 )
             }
         }
-        val forecastRoute = BottomNavItem.Forecast.route
+
         composable(BottomNavItem.Forecast.route) {
-            ForecastScreen(navController = navController,forecastViewModel, homeViewModel, context)
+            ForecastScreen(navController = navController,forecastViewModel, homeViewModel)
         }
         composable(BottomNavItem.Search.route) {
             SearchScreen(

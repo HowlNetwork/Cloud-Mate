@@ -103,29 +103,6 @@ fun HomeScreenElements(
     )
 }
 
-
-
-//suspend fun getLocationName(
-//    context: Context,
-//    latitude: MutableState<Double>,
-//    longitude: MutableState<Double>
-//): String {
-//    // To specify that the geocoding operation should be performed on the IO dispatcher
-//    return withContext(Dispatchers.IO) {
-//        /*
-//        withContext function will automatically suspend the current coroutine and resume it
-//        when the operation is complete, allowing other operations to be performed in the meantime
-//         */
-//        val geocoder = Geocoder(context, Locale.getDefault())
-//        val addresses = geocoder.getFromLocation(latitude.value, longitude.value, 1)
-//        var locationName: String = ""
-//        if (addresses != null && addresses.size > 0) {
-//            locationName = addresses[0].locality
-//        }
-//        locationName
-//    }
-//}
-
 fun getLatLon(context: Context, cityName: String): Address? {
     val geocoder = Geocoder(context)
     return try {

@@ -43,6 +43,9 @@ import com.example.cloudmate.network.weatherapi.ForecastDay
 import com.example.cloudmate.network.weatherapi.ForecastWeather
 import com.example.cloudmate.network.weatherapi.Hour
 import com.example.cloudmate.network.weatherapi.Weather
+import com.example.cloudmate.ui.theme.Blue
+import com.example.cloudmate.ui.theme.LightNavyBlue
+import com.example.cloudmate.ui.theme.White
 import com.example.cloudmate.ui.theme.poppinsFamily
 import com.example.cloudmate.utils.getCurrentDate
 import java.time.Instant
@@ -63,7 +66,8 @@ fun ForecastMainElements() {
             stringResource(R.string.forecast_report),
             fontSize = 30.sp,
             fontWeight = FontWeight.Bold,
-            fontFamily = poppinsFamily
+            fontFamily = poppinsFamily,
+            color = White
         )
     }
     Row(
@@ -76,7 +80,8 @@ fun ForecastMainElements() {
                 "Today",
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Medium,
-                fontFamily = poppinsFamily
+                fontFamily = poppinsFamily,
+                color = White
             )
         }
         Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.End) {
@@ -84,7 +89,8 @@ fun ForecastMainElements() {
                 getCurrentDate(),
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Light,
-                fontFamily = poppinsFamily
+                fontFamily = poppinsFamily,
+                color = White
             )
         }
     }
@@ -140,7 +146,7 @@ fun HourlyForecastData(data: Weather) {
             HourlyCard(
                 image = image,
                 time = time,
-                temperature = item.temp_c.toInt().toString() + "°C"
+                temperature = item.temp_c.toInt().toString()
             )
 
         }
@@ -149,12 +155,12 @@ fun HourlyForecastData(data: Weather) {
 
 @Composable
 fun HourlyCard(image: Int, time: String, temperature: String) {
-    var color = colors.primaryVariant
+    var color = LightNavyBlue
     var tapped by remember {
         mutableStateOf(false)
     }
     if (tapped) {
-        color = colors.secondary
+        color = Blue
     }
     Card(
         modifier = Modifier
@@ -211,7 +217,8 @@ fun NextForecast() {
                 stringResource(R.string.next_forecast),
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Medium,
-                fontFamily = poppinsFamily
+                fontFamily = poppinsFamily,
+                color = White
             )
         }
         Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.End) {
@@ -281,7 +288,7 @@ fun DailyForecastData(data: Weather) {
             DailyCard(
                 day = dayOfWeek,
                 date = monthDate,
-                temperature = item.day.avgtemp_c.toString() + "°C",
+                temperature = item.day.avgtemp_c.toString() ,
                 image = image
             )
         }
@@ -296,7 +303,7 @@ fun DailyCard(day: String, date: String, temperature: String, image: Int) {
             .height(100.dp)
             .padding(bottom = 15.dp),
         shape = RoundedCornerShape(20.dp),
-        colors = CardDefaults.cardColors(containerColor = colors.primaryVariant),
+        colors = CardDefaults.cardColors(containerColor = LightNavyBlue),
         elevation = CardDefaults.cardElevation(500.dp)
     ) {
         Row(

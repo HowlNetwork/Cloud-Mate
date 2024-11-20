@@ -26,7 +26,7 @@ class WeatherApiRepository @Inject constructor(private val api: WeatherApi) {
     suspend fun getForecastWeather(
         lat: Float,
         lon: Float,
-        days: Int = 1,
+        days: Int = 7,
         aqi: Boolean = false,
         alert: Boolean = false
     ): AppResponse<Weather, Boolean, Exception> {

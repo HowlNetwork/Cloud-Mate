@@ -22,5 +22,12 @@ class HomeViewModel @Inject constructor(private val repository: WeatherApiReposi
     ) : AppResponse<Weather, Boolean, Exception> {
         return repository.getForecastWeather(lat,lon)
     }
+    fun setLatLon(lat: Double, lon: Double) {
+        latitude.value = lat
+        longitude.value = lon
+    }
+    fun getLatLon(): Pair<Double, Double> {
+        return Pair(latitude.value, longitude.value)
+    }
 }
 

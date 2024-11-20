@@ -235,6 +235,7 @@ fun ShowData(
             value = homeViewModel.getCurrentWeather(latitude.toFloat(), longitude.toFloat())
         }.value
         weatherData.data?.current?.condition?.text?.let { Log.d("Weather", it) }
+        weatherData.data?.location?.let { homeViewModel.setLatLon(weatherData.data?.location!!.lat, it.lon) }
         when {
             weatherData.success == true && weatherData.data != null -> {
                 forecastViewModel.insertCurrentWeatherObject(
