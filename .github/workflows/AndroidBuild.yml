@@ -14,8 +14,8 @@ jobs :
         - name: Setup Java JDK
           uses: actions/setup-java@v4.5.0
           with:
-            distribution: 'murine'
             java-version: '11'
+            distribution: 'adopt'
 
         - name: Build with Gradle
           run: ./gradlew build
