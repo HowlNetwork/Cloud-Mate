@@ -15,7 +15,7 @@ jobs :
           uses: actions/setup-java@v4.5.0
           with:
               java-version: '17'
-              distribution: 'adopt'
+              distribution: 'temurin'
 
         - name: Ensure Gradle uses Java 11 for source code
           run: |
