@@ -6,7 +6,7 @@ on :
     branches: [features/repository]
 jobs :
     build :
-      runs-on : window-latest
+      runs-on : ubuntu-latest
       steps:
         - name: Checkout
           uses: actions/checkout@v4
@@ -16,7 +16,7 @@ jobs :
           with:
             distribution: 'murine'
             java-version: '11'
-            
+
         - name: Build with Gradle
           run: ./gradlew build
 
