@@ -15,11 +15,7 @@ jobs :
           uses: actions/setup-java@v4.5.0
           with:
               java-version: '17'
-              distribution: 'temurin'
-
-        - name: Ensure Gradle uses Java 11 for source code
-          run: |
-              echo "org.gradle.java.home=/usr/lib/jvm/java-11-openjdk-amd64" >> ./gradle.properties
+              distribution: 'adopt'
 
         - name: Grant execute permission for gradlew
           run: chmod +x ./gradlew
