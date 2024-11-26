@@ -1,9 +1,9 @@
 name : AndroidBuild
 on :
   pull_request:
-    branches: [features/repository]
+    branches: [develop,master]
   push:
-    branches: [features/repository]
+    branches: [develop,master]
 jobs :
     build :
       runs-on : ubuntu-latest
