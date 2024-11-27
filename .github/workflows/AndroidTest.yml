@@ -1,56 +1,44 @@
-name: AndroidTest
-
-on:
+name : AndroidTest
+on :
   pull_request:
     branches: [features/repository]
   push:
     branches: [features/repository]
-  workflow_dispatch:
 
+  workflow_dispatch:
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      # Bước 1: Kiểm tra mã nguồn
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Bước 2: Thiết lập môi trường Java
       - name: Set up Java 17 for Gradle runtime
         uses: actions/setup-java@v4.5.0
         with:
           java-version: '17'
           distribution: 'temurin'
 
-      # Bước 3: Khởi động Android Emulator Runner
-      - name: Android Emulator Runner
-        uses: ReactiveCircus/android-emulator-runner@v2.33.0
-        with:
-          api-level: 30                  # API level của emulator
-          target: google_apis            # Loại hệ thống
-          arch: x86_64                   # Kiến trúc CPU
-          profile: Pixel_4               # Profile của thiết bị
-          script: ./gradlew connectedCheck # Script kiểm tra UI Tests
-          disable-animations: true       # Vô hiệu hóa animation để tăng hiệu suất
-
-      # Bước 4: Phân quyền Gradle Wrapper
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
 
-      # Bước 5: Chạy Unit Tests
       - name: Run Unit Tests
         run: ./gradlew test
 
-      # Bước 6: Lưu báo cáo Unit Tests
       - name: Upload Unit Test Reports
         uses: actions/upload-artifact@v4.4.3
         with:
           name: Unit-Test-Report
           path: build/reports/tests/testDebugUnitTest/
+      - name: Enable KVM
+        run: |
+            echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+            sudo udevadm control --reload-rules
+            sudo udevadm trigger --name-match=kvm
 
-      # Bước 7: Lưu báo cáo kiểm thử giao diện
-      - name: Upload UI Test Reports
-        uses: actions/upload-artifact@v4.4.3
+      - name: run tests
+        uses: reactivecircus/android-emulator-runner@v2
         with:
-          name: UI-Test-Report
-          path: app/build/reports/androidTests/connected/
+          api-level: 35
+          script: ./gradlew connectedCheck
+    
