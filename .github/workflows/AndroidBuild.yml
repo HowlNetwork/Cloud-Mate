@@ -4,27 +4,58 @@ on :
     branches: [features/repository]
   push:
     branches: [features/repository]
-jobs :
-    build :
-      runs-on : ubuntu-latest
-      steps:
-        - name: Checkout
-          uses: actions/checkout@v4
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # Bước 1: Kiểm tra mã nguồn
+      - name: Checkout
+        uses: actions/checkout@v4
 
-        - name: Set up Java 17 for Gradle runtime
-          uses: actions/setup-java@v4.5.0
-          with:
-              java-version: '17'
-              distribution: 'adopt'
+      # Bước 2: Thiết lập môi trường Java
+      - name: Set up Java 17 for Gradle runtime
+        uses: actions/setup-java@v4.5.0
+        with:
+          java-version: '17'
+          distribution: 'adopt'
 
-        - name: Grant execute permission for gradlew
-          run: chmod +x ./gradlew
+      # Bước 3: Cache Gradle dependencies
+      - name: Cache Gradle dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
 
-        - name: Build with Gradle
-          run: ./gradlew build
+      # Bước 4: Phân quyền Gradle Wrapper
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
 
-        - name: Upload a Build Artifact
-          uses: actions/upload-artifact@v4.4.3
-          with:
-            name : CloudMate.apk
-            path : app/build/outputs/apk/debug/app-debug.apk
+      # Bước 5: Kiểm thử đơn vị (Unit Test)
+      - name: Run Unit Tests
+        run: ./gradlew test
+
+      # Bước 6: Kiểm thử giao diện (UI Test)
+      - name: Run UI Tests
+        run: ./gradlew connectedAndroidTest
+
+      # Bước 7: Build ứng dụng
+      - name: Build APK
+        run: ./gradlew assembleDebug
+
+      # Bước 8: Tải lên file APK (artifact)
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4.4.3
+        with:
+          name: CloudMate-debug.apk
+          path: app/build/outputs/apk/debug/app-debug.apk
+
+      # Bước 9: Gửi thông báo kết quả kiểm thử
+      - name: Notify Test Results
+        if: always()
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const result = context.payload.workflow_run.conclusion;
+            console.log(`Test ${result}: Check your build and artifacts.`);
