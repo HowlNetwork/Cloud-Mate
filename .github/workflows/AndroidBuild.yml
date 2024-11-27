@@ -1,9 +1,15 @@
-name : AndroidBuild
-on :
+name: AndroidBuild
+on:
   pull_request:
-    branches: [features/repository]
+    branches:
+      - develop
+      - master
+      - features/repository
   push:
-    branches: [features/repository]
+    branches:
+      - develop
+      - master
+      - features/repository
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -28,34 +34,65 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      # Bước 4: Phân quyền Gradle Wrapper
+      # Bước 4: Chạy kiểm tra định dạng mã nguồn
+      - name: Run Lint Check
+        run: ./gradlew lint
+
+      # Bước 5: Phân quyền Gradle Wrapper
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
 
-      # Bước 5: Kiểm thử đơn vị (Unit Test)
+      # Bước 6: Thiết lập môi trường Android SDK
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v2
+
+      # Bước 7: Khởi động Emulator
+      - name: Start Emulator
+        run: |
+          nohup emulator -avd test -no-snapshot-save -no-window -gpu swiftshader_indirect -qemu > /dev/null 2>&1 &
+          adb wait-for-device
+          adb shell input keyevent 82
+
+      # Bước 8: Kiểm thử đơn vị
       - name: Run Unit Tests
         run: ./gradlew test
 
-      # Bước 6: Kiểm thử giao diện (UI Test)
+      # Bước 9: Lưu báo cáo kiểm thử đơn vị
+      - name: Upload Unit Test Reports
+        uses: actions/upload-artifact@v4.4.3
+        with:
+          name: Unit-Test-Report
+          path: build/reports/tests/testDebugUnitTest/
+
+      # Bước 10: Kiểm thử giao diện
       - name: Run UI Tests
         run: ./gradlew connectedAndroidTest
 
-      # Bước 7: Build ứng dụng
+      # Bước 11: Lưu báo cáo kiểm thử giao diện
+      - name: Upload UI Test Reports
+        uses: actions/upload-artifact@v4.4.3
+        with:
+          name: UI-Test-Report
+          path: app/build/reports/androidTests/connected/
+
+      # Bước 12: Build ứng dụng
       - name: Build APK
         run: ./gradlew assembleDebug
 
-      # Bước 8: Tải lên file APK (artifact)
+      # Bước 13: Tải lên file APK
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v4.4.3
         with:
           name: CloudMate-debug.apk
           path: app/build/outputs/apk/debug/app-debug.apk
 
-      # Bước 9: Gửi thông báo kết quả kiểm thử
-      - name: Notify Test Results
+      # Bước 14: Ghi log kết quả ra console
+      - name: Log Test Results
         if: always()
-        uses: actions/github-script@v6
-        with:
-          script: |
-            const result = context.payload.workflow_run.conclusion;
-            console.log(`Test ${result}: Check your build and artifacts.`);
+        run: |
+          echo "======================== Build and Test Results ========================"
+          echo "Workflow Status: ${{ job.status }}"
+          echo "Branch: ${{ github.ref_name }}"
+          echo "Workflow: ${{ github.workflow }}"
+          echo "Run Link: ${{ github.run_url }}"
+          echo "======================================================================="
