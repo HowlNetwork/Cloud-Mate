@@ -34,13 +34,13 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      # Bước 4: Chạy kiểm tra định dạng mã nguồn
-      - name: Run Lint Check
-        run: ./gradlew lint
-
-      # Bước 5: Phân quyền Gradle Wrapper
+      # Bước 4: Phân quyền Gradle Wrapper
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
+
+      # Bước 5: Chạy kiểm tra định dạng mã nguồn
+      - name: Run Lint Check
+        run: ./gradlew lint
 
       # Bước 6: Thiết lập môi trường Android SDK
       - name: Set up Android SDK
