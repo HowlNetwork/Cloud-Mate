@@ -50,7 +50,7 @@ jobs:
       - name: Start Emulator
         run: |
           echo "Available AVDs:"
-          manager list avd
+          avdmanager list avd
           nohup emulator -avd MediumPhoneAPI35 -no-snapshot-save -no-window -gpu off > /dev/null 2>&1 &
           sleep 90
           adb devices
