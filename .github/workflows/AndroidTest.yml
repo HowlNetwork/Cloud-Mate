@@ -50,7 +50,6 @@ jobs:
           api-level: 30                     # Sử dụng API Level 30 (có thể thay đổi)
           target: google_apis               # Sử dụng Google APIs
           arch: x86_64                      # Kiến trúc CPU 64-bit
-          profile: Pixel_4                  # Profile thiết bị (Pixel 4)
           script: ./gradlew connectedAndroidTest # Lệnh kiểm thử giao diện
           disable-animations: true          # Tắt hiệu ứng động trong emulator
           emulator-options: -no-window -gpu swiftshader_indirect # Tùy chọn giảm tải đồ họa
