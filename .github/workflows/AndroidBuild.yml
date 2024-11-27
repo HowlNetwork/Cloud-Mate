@@ -51,7 +51,7 @@ jobs:
         run: |
           echo "Available AVDs:"
           avdmanager list avd
-          nohup emulator -avd MediumPhoneAPI35 -no-snapshot-save -no-window -gpu off > /dev/null 2>&1 &
+          nohup emulator -avd "Medium Phone API 35" -no-snapshot-save -no-window -gpu off > /dev/null 2>&1 &
           sleep 90
           adb devices
           adb wait-for-device
