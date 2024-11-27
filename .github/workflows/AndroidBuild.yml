@@ -49,9 +49,10 @@ jobs:
       # Bước 7: Khởi động Emulator
       - name: Start Emulator
         run: |
-          nohup emulator -avd test -no-snapshot-save -no-window -gpu swiftshader_indirect -qemu > /dev/null 2>&1 &
+          nohup emulator -avd MediumPhoneAPI35 -no-snapshot-save -no-window -gpu swift shader_indirect > /dev/null 2>&1 &
+          sleep 60
           adb wait-for-device
-          adb shell input keyevent 82
+          adb shell input key event 82
 
       # Bước 8: Kiểm thử đơn vị
       - name: Run Unit Tests
