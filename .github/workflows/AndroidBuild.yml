@@ -49,8 +49,11 @@ jobs:
       # Bước 7: Khởi động Emulator
       - name: Start Emulator
         run: |
-          nohup emulator -avd MediumPhoneAPI35 -no-snapshot-save -no-window -gpu swift shader_indirect > /dev/null 2>&1 &
-          sleep 60
+          echo "Available AVDs:"
+          manager list avd
+          nohup emulator -avd MediumPhoneAPI35 -no-snapshot-save -no-window -gpu off > /dev/null 2>&1 &
+          sleep 90
+          adb devices
           adb wait-for-device
           adb shell input key event 82
 
