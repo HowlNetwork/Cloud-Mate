@@ -1,16 +1,31 @@
 package com.example.cloudmate.network.weatherapi
 
+import android.annotation.SuppressLint
 import com.example.cloudmate.network.common.AppResponse
 import javax.inject.Inject
 
 class WeatherApiRepository @Inject constructor(private val api: WeatherApi) {
+    @SuppressLint("DefaultLocale")
+    private fun formatCoordinates(lat: Float, lon: Float): String {
+        return String.format("%.6f,%.6f", lat, lon)
+    }
+
+    private fun formatBooleanParam(value: Boolean): String {
+        return if (value) "yes" else "no"
+    }
+
+
+    @SuppressLint("DefaultLocale")
     suspend fun getCurrentWeather(
         lat: Float,
         lon: Float,
         aqi: Boolean = false
     ): AppResponse<Weather, Boolean, Exception> {
         val response = try {
-            api.getCurrentWeather("${lat},${lon}", if (aqi) "yes" else "no")
+            api.getCurrentWeather(
+                formatCoordinates(lat,lon),
+                formatBooleanParam(aqi)
+            )
         } catch (e: Exception) {
             return AppResponse(data = null, success = false, e = e)
         }
@@ -19,6 +34,9 @@ class WeatherApiRepository @Inject constructor(private val api: WeatherApi) {
         return AppResponse(data = currentWeather, success = true, e = null)
     }
 
+
+
+    @SuppressLint("DefaultLocale")
     suspend fun getForecastWeather(
         lat: Float,
         lon: Float,
@@ -36,17 +54,16 @@ class WeatherApiRepository @Inject constructor(private val api: WeatherApi) {
 
         val response = try {
             api.getForecastWeather(
-                "${lat},${lon}",
+                formatCoordinates(lat, lon),
                 days,
-                if (aqi) "yes" else "no",
-                if (alert) "yes" else "no"
+                formatBooleanParam(aqi),
+                formatBooleanParam(alert)
             )
         } catch (e: Exception) {
             return AppResponse(data = null, success = false, e = e)
         }
 
-        var currentWeather: Weather? =
-            response.body() ?: return AppResponse(data = null, success = false, e = null)
+        val currentWeather: Weather = response.body() ?: return AppResponse(data = null, success = false, e = null)
         return AppResponse(data = currentWeather, success = true, e = null)
     }
 }
