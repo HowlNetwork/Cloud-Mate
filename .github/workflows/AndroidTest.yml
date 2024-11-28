@@ -1,9 +1,9 @@
 name: AndroidTest
 on:
   pull_request:
-    branches: [features/repository]
+    branches: [develop,master]
   push:
-    branches: [features/repository]
+    branches: [develop,master]
   workflow_dispatch:
 
 jobs:
