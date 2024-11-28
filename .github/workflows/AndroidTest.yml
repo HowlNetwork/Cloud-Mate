@@ -1,0 +1,62 @@
+name: AndroidTest
+on:
+  pull_request:
+    branches: [features/repository]
+  push:
+    branches: [features/repository]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      # Bước 1: Kiểm tra mã nguồn
+      - name: Checkout Source
+        uses: actions/checkout@v4
+
+      # Bước 2: Thiết lập môi trường Java
+      - name: Set up Java 17 for Gradle runtime
+        uses: actions/setup-java@v4.5.0
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      # Bước 3: Cấp quyền cho Gradle Wrapper
+      - name: Grant Execute Permission for Gradlew
+        run: chmod +x ./gradlew
+
+      # Bước 4: Chạy kiểm thử đơn vị
+      - name: Run Unit Tests
+        run: ./gradlew test
+
+      # Bước 5: Lưu báo cáo kiểm thử đơn vị
+      - name: Upload Unit Test Reports
+        uses: actions/upload-artifact@v4.4.3
+        with:
+          name: Unit-Test-Report
+          path: app/build/reports/tests/testDebugUnitTest/
+
+      # Bước 6: Kích hoạt KVM
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      # Bước 7: Thiết lập và chạy Android Emulator Runner
+      - name: Run UI Tests with Emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 30                     # Sử dụng API Level 30 (có thể thay đổi)
+          target: google_apis               # Sử dụng Google APIs
+          arch: x86_64                      # Kiến trúc CPU 64-bit
+          script: ./gradlew connectedAndroidTest # Lệnh kiểm thử giao diện
+          disable-animations: true          # Tắt hiệu ứng động trong emulator
+          emulator-options: -no-window -gpu swiftshader_indirect # Tùy chọn giảm tải đồ họa
+
+      # Bước 8: Lưu báo cáo kiểm thử giao diện
+      - name: Upload UI Test Reports
+        uses: actions/upload-artifact@v4.4.3
+        with:
+          name: UI-Test-Reports
+          path: app/build/reports/androidTests/connected/
