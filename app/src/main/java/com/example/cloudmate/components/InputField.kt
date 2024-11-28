@@ -21,6 +21,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.cloudmate.ui.theme.LightNavyBlue
 import com.example.cloudmate.ui.theme.poppinsFamily
 
 @Composable
@@ -57,7 +58,7 @@ fun InputField(
         placeholder = { Text(text = labelId, fontFamily = poppinsFamily, fontSize = 14.sp) },
         colors = TextFieldDefaults.textFieldColors(
             textColor = Color.White,
-            backgroundColor = colors.primaryVariant,
+            backgroundColor = LightNavyBlue,
             cursorColor = colors.secondary,
             leadingIconColor = Color.White,
             placeholderColor = Color.LightGray,

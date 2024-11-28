@@ -7,7 +7,6 @@ import android.net.NetworkInfo
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -31,11 +30,10 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.rememberNavController
-import com.example.cloudmate.navigation.WeatherNavigation
+import com.example.cloudmate.navigation.CloudMateNavigation
 import com.example.cloudmate.ui.theme.CloudMateTheme
 import com.example.cloudmate.ui.theme.NavyBlue
 import com.example.cloudmate.ui.theme.poppinsFamily
@@ -80,13 +78,9 @@ fun WeatherApp(context: Context) {
                 .fillMaxSize()
                 .background(brush = gradientBrush)
         ) {
-            Scaffold(
-                modifier = Modifier.fillMaxSize(),
-                bottomBar = { NavBar(navController) },
-                containerColor = Color.Transparent,
-            ) {
-                WeatherNavigation(navController, context)
-            }
+
+                CloudMateNavigation(context)
+
         }
         // A surface container using the 'background' color from the theme
     }

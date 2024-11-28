@@ -23,24 +23,24 @@ class WeatherApiRepository @Inject constructor(private val api: WeatherApi) {
     ): AppResponse<Weather, Boolean, Exception> {
         val response = try {
             api.getCurrentWeather(
-                formatCoordinates(lat,lon),
+                formatCoordinates(lat, lon),
                 formatBooleanParam(aqi)
             )
         } catch (e: Exception) {
             return AppResponse(data = null, success = false, e = e)
         }
 
-        val currentWeather: Weather = response.body() ?: return AppResponse(data = null, success = false, e = null)
+        val currentWeather: Weather =
+            response.body() ?: return AppResponse(data = null, success = false, e = null)
         return AppResponse(data = currentWeather, success = true, e = null)
     }
-
 
 
     @SuppressLint("DefaultLocale")
     suspend fun getForecastWeather(
         lat: Float,
         lon: Float,
-        days: Int = 1,
+        days: Int = 7,
         aqi: Boolean = false,
         alert: Boolean = false
     ): AppResponse<Weather, Boolean, Exception> {
@@ -63,7 +63,8 @@ class WeatherApiRepository @Inject constructor(private val api: WeatherApi) {
             return AppResponse(data = null, success = false, e = e)
         }
 
-        val currentWeather: Weather = response.body() ?: return AppResponse(data = null, success = false, e = null)
+        val currentWeather: Weather =
+            response.body() ?: return AppResponse(data = null, success = false, e = null)
         return AppResponse(data = currentWeather, success = true, e = null)
     }
 }

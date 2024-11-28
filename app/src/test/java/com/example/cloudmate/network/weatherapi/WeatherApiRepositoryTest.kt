@@ -1,18 +1,16 @@
 package com.example.cloudmate.network.weatherapi
 
-import android.util.Log
 import com.google.gson.Gson
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertNotNull
 import junit.framework.Assert.assertTrue
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
 import org.junit.Before
 import org.junit.Test
+import org.mockito.Mockito.mock
 import org.mockito.Mockito.`when`
-import org.mockito.kotlin.mock
 import retrofit2.Response
 
 class WeatherApiRepositoryTest {
@@ -102,20 +100,21 @@ class WeatherApiRepositoryTest {
     }
 
     @Test
-    fun `getCurrentWeather should return failure when API call throws an exception`(): Unit = runBlocking {
-        // Arrange
-        `when`(weatherApi.getCurrentWeather("12.34,56.78", "no"))
-            .thenThrow(RuntimeException("Network error"))
+    fun `getCurrentWeather should return failure when API call throws an exception`(): Unit =
+        runBlocking {
+            // Arrange
+            `when`(weatherApi.getCurrentWeather("12.34,56.78", "no"))
+                .thenThrow(RuntimeException("Network error"))
 
-        // Act
-        val response = repository.getCurrentWeather(12.34f, 56.78f)
+            // Act
+            val response = repository.getCurrentWeather(12.34f, 56.78f)
 
-        // Assert
-        response.success?.let { assertFalse(it) }
-        assertNull(response.data)
-        assertNotNull(response.e)
-        assertEquals("Network error", response.e?.message)
-    }
+            // Assert
+            response.success?.let { assertFalse(it) }
+            assertNull(response.data)
+            assertNotNull(response.e)
+            assertEquals("Network error", response.e?.message)
+        }
 
     @Test
     fun `getForecastWeather should return failure when days are out of range`() = runBlocking {
