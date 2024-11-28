@@ -30,8 +30,24 @@ class WeatherApiRepository @Inject constructor(private val api: WeatherApi) {
             return AppResponse(data = null, success = false, e = e)
         }
 
-        val currentWeather: Weather =
-            response.body() ?: return AppResponse(data = null, success = false, e = null)
+        val currentWeather: Weather = response.body() ?: return AppResponse(data = null, success = false, e = null)
+        return AppResponse(data = currentWeather, success = true, e = null)
+    }
+
+    suspend fun getCurrentWeather(
+        location: String,
+        aqi: Boolean = false
+    ): AppResponse<Weather, Boolean, Exception> {
+        val response = try {
+            api.getCurrentWeather(
+                location,
+                formatBooleanParam(aqi)
+            )
+        } catch (e: Exception) {
+            return AppResponse(data = null, success = false, e = e)
+        }
+
+        val currentWeather: Weather = response.body() ?: return AppResponse(data = null, success = false, e = null)
         return AppResponse(data = currentWeather, success = true, e = null)
     }
 
@@ -47,7 +63,7 @@ class WeatherApiRepository @Inject constructor(private val api: WeatherApi) {
         if (days < 1 || days > 10) {
             return AppResponse(
                 data = null,
-                success = true,
+                success = false,
                 e = Exception("Days params smaller than 1 or bigger than 10")
             )
         }
