@@ -19,6 +19,7 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
 import com.example.cloudmate.R
+import com.example.cloudmate.ui.theme.NavyBlue
 import com.example.cloudmate.widgets.BottomNavItem
 import kotlinx.coroutines.delay
 
@@ -41,7 +42,7 @@ fun SplashScreen(navController: NavController) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(colors.primary)
+                .background(NavyBlue)
                 .scale(scale.value),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center

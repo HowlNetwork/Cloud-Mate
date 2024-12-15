@@ -16,12 +16,14 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.example.cloudmate.CustomTestRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
     }
-
+    sourceSets {
+        getByName("debug").manifest.srcFile("src/debug/AndroidManifest.xml")
+    }
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -46,6 +48,11 @@ android {
     }
     packaging {
         resources {
+            excludes += "META-INF/LICENSE.md"
+            excludes += "META-INF/LICENSE.txt"
+            excludes += "META-INF/LICENSE-notice.md"
+            excludes += "META-INF/NOTICE.md"
+            excludes += "META-INF/NOTICE.txt"
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
@@ -63,7 +70,7 @@ dependencies {
     implementation(libs.androidx.material3)
 
     // Thêm thư viện Material Icons
-    implementation("androidx.compose.material:material-icons-extended:1.7.5")
+    implementation(libs.androidx.material.icons.extended)
 
     // Thêm thư viện Material Design 2
     implementation(libs.androidx.material)
@@ -123,12 +130,26 @@ dependencies {
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.androidx.core.testing)
     testImplementation (libs.androidx.room.testing)
+    testImplementation(libs.mockk)
+    testImplementation (libs.hilt.android.testing)
 
+    kaptTest(libs.hilt.compiler)
 
+    testAnnotationProcessor(libs.hilt.compiler)
+
+    androidTestImplementation(libs.mockk.android)
+    androidTestImplementation(libs.mockito.android)
+    androidTestImplementation(libs.androidx.navigation.testing)
+    androidTestImplementation(libs.androidx.espresso.intents)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
+    androidTestImplementation(libs.hilt.android.testing)
+
+    kaptAndroidTest(libs.hilt.compiler)
+
+    androidTestAnnotationProcessor(libs.hilt.compiler)
 
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)

@@ -3,6 +3,7 @@ package com.example.cloudmate.screens.search
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.cloudmate.contracts.ISearchScreenViewModel
 import com.example.cloudmate.data.WeatherDbRepository
 import com.example.cloudmate.module.Favourite
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,10 +16,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchScreenViewModel @Inject constructor(
-    private val searchScreenRepository: WeatherDbRepository) : ViewModel()
-{
+    private val searchScreenRepository: WeatherDbRepository
+) : ViewModel(), ISearchScreenViewModel {
     private val _favList = MutableStateFlow<List<Favourite>>(emptyList())
-    val favList = _favList.asStateFlow()
+    override val favList = _favList.asStateFlow()
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
@@ -36,8 +37,22 @@ class SearchScreenViewModel @Inject constructor(
         }
     }
 
-    fun insertFavourite(favourite: Favourite) = viewModelScope.launch { searchScreenRepository.insertFavourite(favourite) }
-    fun updateFavourite(favourite: Favourite) = viewModelScope.launch { searchScreenRepository.updateFavourite(favourite) }
-    fun deleteFavourite(favourite: Favourite) = viewModelScope.launch { searchScreenRepository.deleteFavourite(favourite) }
+    override fun insertFavourite(favourite: Favourite) {
+        viewModelScope.launch {
+            searchScreenRepository.insertFavourite(favourite)
+        }
+    }
+
+    override fun updateFavourite(favourite: Favourite) {
+        viewModelScope.launch {
+            searchScreenRepository.updateFavourite(favourite)
+        }
+    }
+
+    override fun deleteFavourite(favourite: Favourite) {
+        viewModelScope.launch {
+            searchScreenRepository.deleteFavourite(favourite)
+        }
+    }
 
 }

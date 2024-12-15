@@ -20,7 +20,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.navigation.NavController
+import com.example.cloudmate.contracts.IForecastScreenViewModel
+import com.example.cloudmate.contracts.IHomeScreenViewModel
 import com.example.cloudmate.screens.forecast.ForecastViewModel
 import com.example.cloudmate.widgets.NavBar
 import kotlinx.coroutines.runBlocking
@@ -30,8 +33,8 @@ fun HomeScreen(
     navController: NavController,
     city: String?,
     context: Context,
-    homeViewModel: HomeViewModel,
-    forecastViewModel: ForecastViewModel
+    homeViewModel: IHomeScreenViewModel,
+    forecastViewModel: IForecastScreenViewModel
 ) {
     Log.d("City", "$city")
     lateinit var latitude: MutableState<Double>
@@ -73,6 +76,7 @@ fun HomeScreen(
                 Column(
                     modifier = Modifier
                         .padding(padding)
+                        .testTag("HomeScreen")
                 ) {
                     HomeScreenElements(
                         context = context,

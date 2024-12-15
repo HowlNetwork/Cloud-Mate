@@ -40,6 +40,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -49,6 +50,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.cloudmate.R
 import com.example.cloudmate.components.InputField
+import com.example.cloudmate.contracts.IHomeScreenViewModel
+import com.example.cloudmate.contracts.ISearchScreenViewModel
 import com.example.cloudmate.module.Favourite
 import com.example.cloudmate.network.common.AppResponse
 import com.example.cloudmate.network.weatherapi.Weather
@@ -65,8 +68,8 @@ import com.example.cloudmate.widgets.NavBar
 fun SearchScreen(
     context: Context,
     navController: NavController,
-    searchScreenViewModel: SearchScreenViewModel,
-    homeViewModel: HomeViewModel
+    searchScreenViewModel: ISearchScreenViewModel,
+    homeViewModel: IHomeScreenViewModel
 ) {
     var list = searchScreenViewModel.favList.collectAsState().value
     Box(
@@ -115,7 +118,7 @@ fun SearchScreen(
                         val address = getLatLon(context, city)
                         val latitude = address?.latitude
                         val longitude = address?.longitude
-                        if(latitude != null || longitude != null) {
+                        if (latitude != null || longitude != null) {
                             // Insert record to database
                             searchScreenViewModel.insertFavourite(
                                 Favourite(
@@ -170,11 +173,9 @@ fun SearchScreen(
                 }
 
             }
-        }
-            , bottomBar = {
-                NavBar(navController)
-            }
-        , containerColor = Color.Transparent)
+        }, bottomBar = {
+            NavBar(navController)
+        }, containerColor = Color.Transparent)
     }
 }
 
@@ -214,8 +215,8 @@ fun FavCard(
     favourite: Favourite,
     context: Context,
     navController: NavController,
-    homeViewModel: HomeViewModel,
-    searchScreenViewModel: SearchScreenViewModel
+    homeViewModel: IHomeScreenViewModel,
+    searchScreenViewModel: ISearchScreenViewModel
 ) {
     var color = LightNavyBlue
     if (index == 0) {
@@ -224,6 +225,7 @@ fun FavCard(
     Card(
         modifier = Modifier
             .padding(top = 10.dp, bottom = 10.dp)
+            .testTag("${favourite.city} Card")
             .clickable {
                 val connectivityManager =
                     context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -245,7 +247,8 @@ fun FavCard(
         val weatherData = produceState<AppResponse<Weather, Boolean, Exception>>(
             initialValue = AppResponse(success = true)
         ) {
-            value = homeViewModel.getCurrentWeather(favourite.lat.toFloat(),favourite.lon.toFloat())
+            value =
+                homeViewModel.getCurrentWeather(favourite.lat.toFloat(), favourite.lon.toFloat())
         }.value
         Log.d("Weather", "${weatherData.data}")
         if (weatherData.data != null) {
@@ -329,7 +332,8 @@ fun FavCard(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Column(modifier = Modifier.fillMaxWidth(0.7f)) {
-                    Text(favourite.city,
+                    Text(
+                        favourite.city,
                         fontFamily = poppinsFamily,
                         fontWeight = FontWeight.Medium,
                         color = White
@@ -340,7 +344,8 @@ fun FavCard(
                         imageVector = Icons.Outlined.Cancel,
                         contentDescription = stringResource(R.string.deleted_favourite),
                         tint = Color(0xFFd68118),
-                        modifier = Modifier.clickable {
+                        modifier =
+                        Modifier.testTag("${favourite.city}_Delete").clickable {
                             searchScreenViewModel.deleteFavourite(favourite)
                         })
                 }

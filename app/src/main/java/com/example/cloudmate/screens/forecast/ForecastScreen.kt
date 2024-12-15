@@ -26,6 +26,8 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.cloudmate.contracts.IForecastScreenViewModel
+import com.example.cloudmate.contracts.IHomeScreenViewModel
 import com.example.cloudmate.network.common.AppResponse
 import com.example.cloudmate.network.weatherapi.Weather
 import com.example.cloudmate.screens.home.HomeViewModel
@@ -37,8 +39,8 @@ import com.google.gson.Gson
 @Composable
 fun ForecastScreen(
     navController: NavController,
-    forecastViewModel: ForecastViewModel,
-    homeViewModel: HomeViewModel,
+    forecastViewModel: IForecastScreenViewModel,
+    homeViewModel: IHomeScreenViewModel,
 
     ) {
 //    val gson = Gson()

@@ -27,26 +27,31 @@ import com.example.cloudmate.ui.theme.LightNavyBlue
 
 sealed class BottomNavItem(
     val route: String,
-    val icon: ImageVector
+    val icon: ImageVector,
+    val contentDescription: String? = null
 ) {
     object Home : BottomNavItem(
         route = Screen.Home.route,
-        icon = Icons.Outlined.Home
+        icon = Icons.Outlined.Home,
+        contentDescription = "Home Icon"
     )
 
     object Search : BottomNavItem(
         route = Screen.Search.route,
-        icon = Icons.Outlined.Search
+        icon = Icons.Outlined.Search,
+        contentDescription = "Searching Icon"
     )
 
     object Forecast : BottomNavItem(
         route = Screen.Forecast.route,
-        icon = Icons.Outlined.Analytics
+        icon = Icons.Outlined.Analytics,
+        contentDescription = "Forecast Icon"
     )
 
     object Settings : BottomNavItem(
         route = Screen.Settings.route,
-        icon = Icons.Outlined.Settings
+        icon = Icons.Outlined.Settings,
+        contentDescription = "Settings Icon"
     )
 }
 
@@ -85,7 +90,7 @@ fun NavBar(navController: NavController) {
                             color = Color(0xFFd68118)
                         }
                     }
-                    Icon(item.icon, contentDescription = null, tint = color)
+                    Icon(item.icon, item.contentDescription, tint = color)
                 },
                 selected = currentRoute == item.route,
                 selectedContentColor = Color.Transparent,

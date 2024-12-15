@@ -55,6 +55,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import com.example.cloudmate.R
+import com.example.cloudmate.contracts.IForecastScreenViewModel
+import com.example.cloudmate.contracts.IHomeScreenViewModel
 import com.example.cloudmate.module.CurrentWeatherObject
 import com.example.cloudmate.network.common.AppResponse
 import com.example.cloudmate.network.weatherapi.Weather
@@ -82,8 +84,8 @@ import java.util.Locale
 @ExperimentalPermissionsApi
 @Composable
 fun GetCurrentLocation(
-    homeViewModel: HomeViewModel,
-    forecastViewModel: ForecastViewModel,
+    homeViewModel: IHomeScreenViewModel,
+    forecastViewModel: IForecastScreenViewModel,
     context: Context,
     latitude: MutableState<Double>,
     longitude: MutableState<Double>,
@@ -220,8 +222,8 @@ fun GetCurrentLocation(
 
 @Composable
 fun ShowData(
-    homeViewModel: HomeViewModel,
-    forecastViewModel: ForecastViewModel,
+    homeViewModel: IHomeScreenViewModel,
+    forecastViewModel: IForecastScreenViewModel,
     latitude: Double,
     longitude: Double
 ) {

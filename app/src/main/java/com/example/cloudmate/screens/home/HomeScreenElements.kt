@@ -21,11 +21,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.cloudmate.R
+import com.example.cloudmate.contracts.IForecastScreenViewModel
+import com.example.cloudmate.contracts.IHomeScreenViewModel
 import com.example.cloudmate.location.GetCurrentLocation
 import com.example.cloudmate.location.getLocationName
 import com.example.cloudmate.screens.forecast.ForecastViewModel
@@ -40,8 +43,8 @@ import java.util.Locale
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun HomeScreenElements(
-    homeViewModel: HomeViewModel,
-    forecastViewModel: ForecastViewModel,
+    homeViewModel: IHomeScreenViewModel,
+    forecastViewModel: IForecastScreenViewModel,
     context: Context,
     latitude: MutableState<Double>,
     longitude: MutableState<Double>,
@@ -78,7 +81,8 @@ fun HomeScreenElements(
             locationName,
             fontSize = 16.sp,
             fontFamily = poppinsFamily,
-            color = White
+            color = White,
+            modifier = Modifier.testTag("CityName")
         )
     }
     Row(
