@@ -98,6 +98,20 @@ fun NavBar(navController: NavController) {
                     if (item != BottomNavItem.Home) {
                         if (item == BottomNavItem.Settings) {
                             /*TODO(/*Not yet Implemented*/)*/
+                            navController.navigate(item.route) {
+                                // Pop up to the start destination of the graph to
+                                // avoid building up a large stack of destinations
+                                // on the back stack as users select items
+                                navController.graph.startDestinationRoute?.let { route ->
+                                    popUpTo(route) {
+                                        saveState = true
+                                    }
+                                }
+                                // Avoid multiple copies of the same destination when re-selecting the same item
+                                launchSingleTop = true
+                                // Restore state when re-selecting a previously selected item
+                                restoreState = true
+                            }
                         } else {
                             navController.navigate(item.route) {
                                 // Pop up to the start destination of the graph to
