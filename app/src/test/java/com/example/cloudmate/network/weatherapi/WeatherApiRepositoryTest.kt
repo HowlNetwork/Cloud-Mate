@@ -19,7 +19,8 @@ class WeatherApiRepositoryTest {
     fun setup() {
         val mockEnv = Env(
             weatherApiEndpoint = "https://api.weatherapi.com/",
-            weatherApiKey = "7b08e5fa126f417c9cb203330241811"
+            weatherApiKey = "7b08e5fa126f417c9cb203330241811",
+            floodCheckApiEndpoint = "https://api.weatherapi.com/"
         )
 
         weatherApi = ApiModule.provideWeatherApi(

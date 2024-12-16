@@ -146,6 +146,7 @@ fun SearchScreen(
                             fontWeight = FontWeight.Bold,
                             fontFamily = poppinsFamily,
                             textAlign = TextAlign.Center,
+                            color = White,
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(top = 20.dp)

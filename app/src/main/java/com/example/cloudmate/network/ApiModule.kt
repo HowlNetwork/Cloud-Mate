@@ -1,6 +1,7 @@
 package com.example.cloudmate.network
 
 import com.example.cloudmate.core.Env
+import com.example.cloudmate.network.floodapi.FloodCheckApi
 import com.example.cloudmate.network.weatherapi.WeatherApi
 import dagger.Module
 import dagger.Provides
@@ -49,4 +50,22 @@ object ApiModule {
 
         return retrofit.create(WeatherApi::class.java)
     }
+    @Provides
+    @Singleton
+    fun provideFloodCheckApi(
+        gsonConverterFactory: GsonConverterFactory,
+        env: Env // Biến môi trường chứa base URL
+    ): FloodCheckApi {
+        val okHttpClient = OkHttpClient.Builder().build()
+
+        val retrofit = Retrofit.Builder()
+            .baseUrl(env.floodCheckApiEndpoint) // Base URL từ biến môi trường
+            .client(okHttpClient)
+            .addConverterFactory(gsonConverterFactory)
+            .build()
+
+        return retrofit.create(FloodCheckApi::class.java)
+    }
+
+
 }

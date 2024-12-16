@@ -78,6 +78,7 @@ dependencies {
     // Hilt Dagger
     implementation(libs.hilt.android)
     implementation(libs.vision.internal.vkp)
+    implementation(libs.androidx.hilt.common)
     kapt(libs.hilt.compiler)
 
     // Navigation
@@ -107,6 +108,9 @@ dependencies {
 
     // OkHttp
     implementation(libs.okhttp)
+
+    //WorkManager
+    implementation(libs.androidx.work.runtime.ktx)
 
     //Room
     implementation(libs.androidx.room.runtime)

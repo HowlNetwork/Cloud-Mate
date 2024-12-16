@@ -5,6 +5,7 @@ import io.github.cdimascio.dotenv.dotenv
 class Env(
     val weatherApiEndpoint: String,
     val weatherApiKey: String,
+    val floodCheckApiEndpoint : String
 ){
     companion object{
         fun newEnv(): Env {
@@ -15,7 +16,8 @@ class Env(
 
             return Env(
                 weatherApiEndpoint = dotenv["WEATHER_API_ENDPOINT"],
-                weatherApiKey = dotenv["WEATHER_API_KEY"]
+                weatherApiKey = dotenv["WEATHER_API_KEY"],
+                floodCheckApiEndpoint = dotenv["FLOOD_CHECK_API_ENDPOINT"]
             )
         }
     }
