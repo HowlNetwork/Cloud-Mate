@@ -21,4 +21,4 @@ This application provides weather forecasts and disaster alerts based on collect
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/HowlNetwork/HKI2425_MobDev20_Nhom04.git
+   git clone https://github.com/HowlNetwork/Cloud-Mate.git
